@@ -9,8 +9,8 @@ const AppLayout = () => {
         'sm:grid-cols-[112px_1fr] sm:grid-rows-1',
       ])}
     >
-      <aside></aside>
-      <section className="p-8">
+      <aside className={cn(['order-2', 'sm:order-1'])}></aside>
+      <section className={cn(['order-1 p-8', 'sm:order-2'])}>
         <Outlet />
       </section>
     </main>

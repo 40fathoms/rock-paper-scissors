@@ -14,7 +14,6 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         titleTemplate="%s | Rock, Paper, Scissors"
         htmlAttributes={{ lang: 'en' }}
       />
-
       <RouterProvider router={router} />
     </HelmetProvider>
   </React.StrictMode>,

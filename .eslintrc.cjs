@@ -57,6 +57,10 @@ module.exports = {
         plugins: ['prettier-plugin-tailwindcss'],
       },
     ],
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      { "varsIgnorePattern": "^_" }
+    ],
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {
