@@ -1,72 +1,62 @@
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext'
 import { cn } from '@/utils/cn'
 import { generateRandomCathetuses } from '@/utils/generateRandomCathetuses'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useRef } from 'react'
+import { useAnimationFrame, motion } from 'framer-motion'
 
 const Element = () => {
   const { boxRef } = useContext(RockPaperScissorsContext)
+  const direction = useRef(generateRandomCathetuses())
+  const positionRef = useRef(null)
 
-  const [iconPosition, setIconPosition] = useState({ x: 250, y: 250 })
-  const [direction, setDirection] = useState(generateRandomCathetuses())
+  useAnimationFrame(({ time, delta }) => {
+    if (!positionRef.current || !positionRef.current?.style) return
 
-  useEffect(() => {
-    const animateIcon = () => {
-      if (boxRef.current) {
-        // Measure the box dimensions once it's mounted
-        const box = boxRef.current
-        const width = box?.offsetWidth
-        // Assuming the box is square, we use either dimension for both boundaries
-        const boundary = width - 24 // Subtract 24 from the icon dimensions
+    const y = (1 + Math.sin(time / 1000)) * 50
+    positionRef.current.style.transform = `translateY(${y}px))`
 
-        const newX = iconPosition.x + direction.dx
-        const newY = iconPosition.y + direction.dy
+    // https://www.framer.com/motion/use-transform/
 
-        console.log(`New X: ${newX}, New Y: ${newY}`) // Debugging log
+    // if (boxRef.current) {
+    //   const box = boxRef.current
+    //   const width = box.offsetWidth
+    //   const boundary = width - 24
 
-        // Check if the new position is within the box
-        if (newX >= 0 && newX <= boundary && newY >= 0 && newY <= boundary) {
-          setIconPosition({ x: newX, y: newY })
-        }
+    //   const newX = positionRef.current.x + (direction.current.dx || 0)
+    //   const newY = positionRef.current.y + (direction.current.dy || 0)
 
-        // Change direction if hit the vertical boundary
-        if (newX >= 0 && newX <= boundary && (newY >= boundary || newY <= 0)) {
-          const newYDirection = direction.dy * -1
+    //   if (newX >= 0 && newX <= boundary && newY >= 0 && newY <= boundary) {
+    //     positionRef.current = { ...positionRef.current, x: newX, y: newY }
+    //   }
 
-          setDirection((previousDirection) => ({
-            ...previousDirection,
-            dy: newYDirection,
-          }))
+    //   if (
+    //     (newX >= 0 && newX <= boundary && newY >= boundary) ||
+    //     (newX >= boundary && newY <= 0)
+    //   ) {
+    //     direction.current.dy *= -1
+    //     positionRef.current = {
+    //       ...positionRef.current,
+    //       y: newY + (direction.current.dy || 0),
+    //     }
+    //   }
 
-          setIconPosition({ x: newX, y: iconPosition.y + newYDirection })
-        }
-
-        // Change direction if hit the horizontal boundary
-        if (newY >= 0 && newY <= boundary && (newX >= boundary || newX <= 0)) {
-          const newXDirection = direction.dx * -1
-
-          setDirection((previousDirection) => ({
-            ...previousDirection,
-            dx: newXDirection,
-          }))
-
-          setIconPosition({ x: iconPosition.x + newXDirection, y: newY })
-        }
-      }
-    }
-
-    // Start animation loop
-    const intervalId = setInterval(animateIcon, 5) // Adjust interval for speed
-
-    return () => clearInterval(intervalId) 
-  }, [iconPosition, direction])
+    //   if (
+    //     (newY >= 0 && newY <= boundary && newX >= boundary) ||
+    //     (newY >= boundary && newX <= 0)
+    //   ) {
+    //     direction.current.dx *= -1
+    //     positionRef.current = {
+    //       ...positionRef.current,
+    //       x: newX + (direction.current.dx || 0),
+    //     }
+    //   }
+    // }
+  })
 
   return (
-    <div
+    <motion.div
+      ref={positionRef}
       className={cn(['absolute h-6 w-6 bg-white'])}
-      style={{
-        left: `${iconPosition.x}px`,
-        top: `${iconPosition.y}px`,
-      }}
     />
   )
 }

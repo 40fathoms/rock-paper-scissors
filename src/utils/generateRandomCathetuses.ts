@@ -1,13 +1,16 @@
 /**
  * Generates cathetuses x and y based on a random angle, such as their hypotenuse is always 1.
  *
+ * @param {number} hypotenuse - The length of the hypotenuse of the right triangle. Defaults to 1.
  * @return {{dx: number, dy: number}} An object containing the random cathetuses.
  */
-const generateRandomCathetuses = (): { dx: number; dy: number } => {
+const generateRandomCathetuses = (
+  hypotenuse = 1,
+): { dx: number; dy: number } => {
   const theta = Math.random() * 2 * Math.PI
 
-  const dx = Math.cos(theta)
-  const dy = Math.sin(theta)
+  const dx = Math.cos(theta) * hypotenuse
+  const dy = Math.sin(theta) * hypotenuse
 
   return { dx, dy }
 }
