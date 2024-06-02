@@ -57,7 +57,7 @@ const Element = () => {
     // Start animation loop
     const intervalId = setInterval(animateIcon, 5) // Adjust interval for speed
 
-    return () => clearInterval(intervalId) // Cleanup on unmount
+    return () => clearInterval(intervalId) 
   }, [iconPosition, direction])
 
   return (
