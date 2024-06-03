@@ -1,6 +1,7 @@
-import type { MutableRefObject, RefObject } from 'react';
-import type { CathetusesDirection } from './generateRandomCathetuses';
 import type { MotionValue } from 'framer-motion';
+import type { MutableRefObject, RefObject } from 'react';
+
+import type { CathetusesDirection } from './generateRandomCathetuses';
 
 interface IUpdateElementPosition {
   (props: {

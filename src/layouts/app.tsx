@@ -1,5 +1,6 @@
-import { cn } from '@/utils/cn';
 import { Outlet } from 'react-router-dom';
+
+import { cn } from '@/utils/cn';
 
 const AppLayout = () => {
   return (

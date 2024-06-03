@@ -6,7 +6,9 @@ type CathetusesDirection = { dx: number; dy: number };
  * @param {number} hypotenuse - The length of the hypotenuse of the right triangle. Defaults to 1.
  * @return {CathetusesDirection} An object containing the random cathetuses.
  */
-const generateRandomCathetuses = (hypotenuse = 1): CathetusesDirection => {
+const generateRandomCathetuses = (
+  hypotenuse: number = 1
+): CathetusesDirection => {
   const theta = Math.random() * 2 * Math.PI;
 
   const dx = Math.cos(theta) * hypotenuse;

@@ -1,4 +1,5 @@
-import { ElementRef, ReactNode, RefObject, createContext, useRef } from 'react';
+import type { ElementRef, ReactNode, RefObject } from 'react';
+import { createContext, useRef } from 'react';
 
 interface IRockPaperScissorsContext {
   boxRef: RefObject<HTMLDivElement>;
