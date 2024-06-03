@@ -2,60 +2,55 @@ import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext'
 import { cn } from '@/utils/cn'
 import { generateRandomCathetuses } from '@/utils/generateRandomCathetuses'
 import { useContext, useRef } from 'react'
-import { useAnimationFrame, motion } from 'framer-motion'
+import { motion, useMotionValue } from 'framer-motion'
+import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame'
 
 const Element = () => {
   const { boxRef } = useContext(RockPaperScissorsContext)
   const direction = useRef(generateRandomCathetuses())
   const positionRef = useRef(null)
 
-  useAnimationFrame(({ time, delta }) => {
-    if (!positionRef.current || !positionRef.current?.style) return
+  const x = useMotionValue(Math.random() * 240)
+  const y = useMotionValue(Math.random() * 240)
 
-    const y = (1 + Math.sin(time / 1000)) * 50
-    positionRef.current.style.transform = `translateY(${y}px))`
+  useRequestAnimationFrame(() => {
+    if (boxRef.current) {
+      const box = boxRef.current
+      const width = box.offsetWidth
+      const boundary = width - 24 // subtracting the width of the element
 
-    // https://www.framer.com/motion/use-transform/
+      const newX = x.get() + (direction.current.dx || 0)
 
-    // if (boxRef.current) {
-    //   const box = boxRef.current
-    //   const width = box.offsetWidth
-    //   const boundary = width - 24
+      if (newX >= 0 && newX <= boundary) {
+        x.set(newX)
+      } else {
+        direction.current.dx *= -1
+        x.set(newX + (direction.current.dx || 0))
+      }
+    }
+  })
 
-    //   const newX = positionRef.current.x + (direction.current.dx || 0)
-    //   const newY = positionRef.current.y + (direction.current.dy || 0)
+  useRequestAnimationFrame(() => {
+    if (boxRef.current) {
+      const box = boxRef.current
+      const width = box.offsetWidth
+      const boundary = width - 24 // subtracting the width of the element
 
-    //   if (newX >= 0 && newX <= boundary && newY >= 0 && newY <= boundary) {
-    //     positionRef.current = { ...positionRef.current, x: newX, y: newY }
-    //   }
+      const newY = y.get() + (direction.current.dy || 0)
 
-    //   if (
-    //     (newX >= 0 && newX <= boundary && newY >= boundary) ||
-    //     (newX >= boundary && newY <= 0)
-    //   ) {
-    //     direction.current.dy *= -1
-    //     positionRef.current = {
-    //       ...positionRef.current,
-    //       y: newY + (direction.current.dy || 0),
-    //     }
-    //   }
-
-    //   if (
-    //     (newY >= 0 && newY <= boundary && newX >= boundary) ||
-    //     (newY >= boundary && newX <= 0)
-    //   ) {
-    //     direction.current.dx *= -1
-    //     positionRef.current = {
-    //       ...positionRef.current,
-    //       x: newX + (direction.current.dx || 0),
-    //     }
-    //   }
-    // }
+      if (newY >= 0 && newY <= boundary) {
+        y.set(newY)
+      } else {
+        direction.current.dy *= -1
+        y.set(newY + (direction.current.dy || 0))
+      }
+    }
   })
 
   return (
     <motion.div
       ref={positionRef}
+      style={{ x, y }}
       className={cn(['absolute h-6 w-6 bg-white'])}
     />
   )
