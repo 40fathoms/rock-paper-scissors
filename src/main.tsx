@@ -1,10 +1,10 @@
-import '@/styles/globals.css'
+import '@/styles/globals.css';
 
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { Helmet, HelmetProvider } from 'react-helmet-async'
-import { RouterProvider } from 'react-router-dom'
-import { router } from '@/router'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
+import { RouterProvider } from 'react-router-dom';
+import { router } from '@/router';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
@@ -16,5 +16,5 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
       />
       <RouterProvider router={router} />
     </HelmetProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

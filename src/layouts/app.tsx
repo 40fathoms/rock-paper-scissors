@@ -1,12 +1,12 @@
-import { cn } from '@/utils/cn'
-import { Outlet } from 'react-router-dom'
+import { cn } from '@/utils/cn';
+import { Outlet } from 'react-router-dom';
 
 const AppLayout = () => {
   return (
     <main
       className={cn([
         'grid min-h-dvh grid-cols-1 grid-rows-[1fr_96px] bg-gray-900',
-        'sm:grid-cols-[112px_1fr] sm:grid-rows-1',
+        'sm:grid-cols-[112px_1fr] sm:grid-rows-1'
       ])}
     >
       <aside className={cn(['order-2', 'sm:order-1'])}></aside>
@@ -14,7 +14,7 @@ const AppLayout = () => {
         <Outlet />
       </section>
     </main>
-  )
-}
+  );
+};
 
-export { AppLayout }
+export { AppLayout };

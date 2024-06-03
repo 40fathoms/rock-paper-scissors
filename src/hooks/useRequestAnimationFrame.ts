@@ -1,7 +1,7 @@
-import { useEffect } from 'react'
+import { useEffect } from 'react';
 
 interface IUseRequestAnimationFrame {
-  (animationCallback: () => void): void
+  (animationCallback: () => void): void;
 }
 
 /**
@@ -11,19 +11,20 @@ interface IUseRequestAnimationFrame {
  * @return {void} This hook does not return anything.
  */
 const useRequestAnimationFrame: IUseRequestAnimationFrame = (
-  animationCallback,
+  animationCallback
 ) => {
   useEffect(() => {
-    let animationId: number
+    let animationId: number;
     const animateElement = () => {
-      animationCallback()
-      animationId = requestAnimationFrame(animateElement)
-    }
+      animationCallback();
+      animationId = requestAnimationFrame(animateElement);
+    };
 
-    animateElement()
+    animateElement();
 
-    return () => cancelAnimationFrame(animationId)
-  }, [])
-}
+    return () => cancelAnimationFrame(animationId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+};
 
-export { useRequestAnimationFrame }
+export { useRequestAnimationFrame };

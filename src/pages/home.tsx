@@ -1,5 +1,5 @@
-import { Box } from '@/components/home/box'
-import { RockPaperScissorsContextProvider } from '@/contexts/RockPaperScissorsContext'
+import { Box } from '@/components/home/box';
+import { RockPaperScissorsContextProvider } from '@/contexts/RockPaperScissorsContext';
 
 const Home = () => {
   return (
@@ -8,7 +8,7 @@ const Home = () => {
         <Box />
       </div>
     </RockPaperScissorsContextProvider>
-  )
-}
+  );
+};
 
-export { Home }
+export { Home };

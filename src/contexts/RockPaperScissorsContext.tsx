@@ -1,27 +1,27 @@
-import { ElementRef, ReactNode, RefObject, createContext, useRef } from 'react'
+import { ElementRef, ReactNode, RefObject, createContext, useRef } from 'react';
 
 interface IRockPaperScissorsContext {
-  boxRef: RefObject<HTMLDivElement>
+  boxRef: RefObject<HTMLDivElement>;
 }
 
 const RockPaperScissorsContext = createContext<IRockPaperScissorsContext>(
-  {} as IRockPaperScissorsContext,
-)
+  {} as IRockPaperScissorsContext
+);
 
 interface IRockPaperScissorsContextProvider {
-  children: ReactNode
+  children: ReactNode;
 }
 
 const RockPaperScissorsContextProvider = ({
-  children,
+  children
 }: IRockPaperScissorsContextProvider) => {
-  const boxRef = useRef<ElementRef<'div'>>(null)
+  const boxRef = useRef<ElementRef<'div'>>(null);
 
   return (
     <RockPaperScissorsContext.Provider value={{ boxRef }}>
       {children}
     </RockPaperScissorsContext.Provider>
-  )
-}
+  );
+};
 
-export { RockPaperScissorsContext, RockPaperScissorsContextProvider }
+export { RockPaperScissorsContext, RockPaperScissorsContextProvider };

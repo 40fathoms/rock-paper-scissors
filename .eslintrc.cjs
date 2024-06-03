@@ -9,20 +9,20 @@ module.exports = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended'
   ],
   globals: { React: true, JSX: true },
   ignorePatterns: [
     'dist',
     '.eslintrc.cjs',
     'tailwind.config.cjs',
-    'postcss.config.cjs',
+    'postcss.config.cjs'
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    'sourceType': 'module',
-    'ecmaVersion': 'latest',
-    'ecmaFeatures': { jsx: true },
+    sourceType: 'module',
+    ecmaVersion: 'latest',
+    ecmaFeatures: { jsx: true }
   },
   settings: {
     react: {
@@ -35,13 +35,13 @@ module.exports = {
     'react-hooks',
     'prettier',
     'unicorn',
-    'import',
+    'import'
   ],
   rules: {
     'prettier/prettier': [
       'error',
       {
-        semi: false,
+        semi: true,
         tabWidth: 2,
         useTabs: false,
         singleQuote: true,
@@ -50,39 +50,32 @@ module.exports = {
         bracketSpacing: true,
         arrowParens: 'always',
         endOfLine: 'auto',
-        trailingComma: 'all',
+        trailingComma: 'none',
         proseWrap: 'always',
         tailwindFunctions: ['tv', 'cn'],
         tailwindConfig: './tailwind.config.cjs',
-        plugins: ['prettier-plugin-tailwindcss'],
-      },
+        plugins: ['prettier-plugin-tailwindcss']
+      }
     ],
-    "@typescript-eslint/no-unused-vars": [
-      "warn",
-      { "varsIgnorePattern": "^_" }
-    ],
+    '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
     '@typescript-eslint/consistent-type-imports': [
       'warn',
       {
         disallowTypeAnnotations: true,
         fixStyle: 'separate-type-imports',
-        prefer: 'type-imports',
-      },
+        prefer: 'type-imports'
+      }
     ],
     '@typescript-eslint/naming-convention': [
       'error',
       {
         format: ['PascalCase'],
-        selector: ['typeLike', 'enumMember'],
+        selector: ['typeLike', 'enumMember']
       },
       {
-        custom: {
-          match: false,
-          regex: '^I[A-Z]|^(Interface|Props|State)$',
-        },
         format: ['PascalCase'],
-        selector: 'interface',
-      },
+        selector: 'interface'
+      }
     ],
     '@typescript-eslint/no-explicit-any': 'error',
     'import/default': 'off',
@@ -104,14 +97,14 @@ module.exports = {
           'internal',
           'parent',
           'sibling',
-          'index',
+          'index'
         ],
         'newlines-between': 'always',
-        'alphabetize': {
+        alphabetize: {
           order: 'asc',
-          caseInsensitive: true,
-        },
-      },
+          caseInsensitive: true
+        }
+      }
     ],
     'no-console': ['warn', { allow: ['warn', 'error'] }],
     'no-var': 'error',
@@ -120,24 +113,21 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react/button-has-type': 'warn',
-    'react/function-component-definition': ['warn', { 'namedComponents': 'arrow-function' }],
+    'react/function-component-definition': [
+      'warn',
+      { namedComponents: 'arrow-function' }
+    ],
     'react/jsx-pascal-case': 'warn',
     'react/prop-types': 'off',
     'react/react-in-jsx-scope': 'off',
-    'unicorn/filename-case': [
-      'error',
-      {
-        case: 'kebabCase',
-      },
-    ],
-    'unicorn/prefer-node-protocol': 'warn',
+    'unicorn/prefer-node-protocol': 'warn'
   },
   overrides: [
     {
       files: ['vite.config.ts'],
       rules: {
-        'import/no-default-export': 'off',
-      },
-    },
-  ],
+        'import/no-default-export': 'off'
+      }
+    }
+  ]
 };

@@ -1,6 +1,6 @@
-import type { ClassValue } from 'clsx'
-import { clsx } from 'clsx'
-import { twMerge } from 'tailwind-merge'
+import type { ClassValue } from 'clsx';
+import { clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 
 /**
  * Merge tailwind classes
@@ -8,6 +8,6 @@ import { twMerge } from 'tailwind-merge'
  * @param {ClassValue[]} inputs - The classes to be merged
  * @returns {string} - The merged classes
  */
-const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs))
+const cn = (...inputs: ClassValue[]): string => twMerge(clsx(inputs));
 
-export { cn }
+export { cn };
