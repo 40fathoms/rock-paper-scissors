@@ -14,7 +14,9 @@ const Box = () => {
         'sm:h-[31rem] sm:w-[31rem]',
       ])}
     >
-      <Element />
+      {Array.from({ length: 10 }).map((_, index) => (
+        <Element key={index} />
+      ))}
     </div>
   )
 }

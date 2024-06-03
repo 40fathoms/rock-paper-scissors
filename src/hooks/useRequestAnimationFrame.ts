@@ -10,7 +10,7 @@ interface IUseRequestAnimationFrame {
  * @param {() => void} animationCallback - The callback function that will be invoked on each animation frame.
  * @return {void} This hook does not return anything.
  */
-export const useRequestAnimationFrame: IUseRequestAnimationFrame = (
+const useRequestAnimationFrame: IUseRequestAnimationFrame = (
   animationCallback,
 ) => {
   useEffect(() => {
@@ -25,3 +25,5 @@ export const useRequestAnimationFrame: IUseRequestAnimationFrame = (
     return () => cancelAnimationFrame(animationId)
   }, [])
 }
+
+export { useRequestAnimationFrame }
