@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
 import { Element } from './element';
 
@@ -6,7 +6,15 @@ import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { cn } from '@/utils/cn';
 
 const Box = () => {
-  const { boxRef } = useContext(RockPaperScissorsContext);
+  const { boxRef, quadTree } = useContext(RockPaperScissorsContext);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      console.log('quadTree point 0: ', quadTree.current.points.get('0'));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [quadTree]);
 
   return (
     <div
@@ -16,8 +24,13 @@ const Box = () => {
         'sm:h-[31rem] sm:w-[31rem]'
       ])}
     >
-      {Array.from({ length: 10 }).map((_, index) => (
-        <Element key={index} />
+      {Array.from(quadTree.current.points.values()).map((point) => (
+        <Element
+          key={point.id}
+          id={point.id}
+          initialX={point.x}
+          initialY={point.y}
+        />
       ))}
     </div>
   );
