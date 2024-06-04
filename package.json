@@ -8,6 +8,7 @@
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "pnpm exec prettier --write .",
+    "tsc": "tsc",
     "preview": "vite preview"
   },
   "dependencies": {
