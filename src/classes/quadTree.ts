@@ -2,7 +2,8 @@ class Point {
   constructor(
     public x: number,
     public y: number,
-    public id: string
+    public id: string,
+    public color: string
   ) {}
 }
 
@@ -52,6 +53,20 @@ class QuadTree {
     this.northwest = null;
     this.southeast = null;
     this.southwest = null;
+  }
+
+  static CreateQuadTree(quadTree: QuadTree) {
+    for (let i = 0; i < 2; i++) {
+      // const x = Math.random() * 400;
+      // const y = Math.random() * 400;
+      const x = i ? 400 : 0;
+      const y = 240;
+
+      const color = i ? 'red' : 'blue';
+
+      const point = new Point(x, y, `${i}`, color);
+      quadTree.insert(point);
+    }
   }
 
   subdivide() {
@@ -111,28 +126,39 @@ class QuadTree {
     }
   }
 
-  query(
-    range: Rectangle,
-    found: Map<string, Point> = new Map()
-  ): Map<string, Point> {
+  // Check if any point is within range of a given point and return intersecting points
+  pointsInRange(point: Point, range: number): Point[] {
+    const searchArea = new Rectangle(point.x, point.y, range * 2, range * 2);
+    const pointsInRange = this.query(searchArea);
+    return pointsInRange.filter(
+      (p) => p.id !== point.id && this.distance(point, p) <= range
+    );
+  }
+
+  // Helper method to calculate the distance between two points
+  private distance(point1: Point, point2: Point): number {
+    return Math.sqrt((point1.x - point2.x) ** 2 + (point1.y - point2.y) ** 2);
+  }
+
+  query(range: Rectangle): Point[] {
+    // Query method implementation to find points within a given range
+    const found: Point[] = [];
     if (!this.boundary.intersects(range)) {
       return found;
-    } else {
-      for (const point of this.points.values()) {
-        if (range.contains(point)) {
-          found.set(point.id, point);
-        }
-      }
-
-      if (this.divided) {
-        this.northeast!.query(range, found);
-        this.northwest!.query(range, found);
-        this.southeast!.query(range, found);
-        this.southwest!.query(range, found);
-      }
-
-      return found;
     }
+
+    for (const point of this.points.values()) {
+      if (range.contains(point)) {
+        found.push(point);
+      }
+    }
+
+    if (this.divided) {
+      // Recursively search in child nodes...
+      // Add points found in child nodes to the found array...
+    }
+
+    return found;
   }
 }
 

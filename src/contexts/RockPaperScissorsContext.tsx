@@ -1,4 +1,11 @@
-import type { ElementRef, MutableRefObject, ReactNode, RefObject } from 'react';
+import type {
+  Dispatch,
+  ElementRef,
+  MutableRefObject,
+  ReactNode,
+  RefObject,
+  SetStateAction
+} from 'react';
 import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 
 import { Point, QuadTree, Rectangle } from '@/classes/quadTree';
@@ -6,7 +13,10 @@ import { Point, QuadTree, Rectangle } from '@/classes/quadTree';
 interface IRockPaperScissorsContext {
   boxRef: RefObject<HTMLDivElement>;
   quadTree: MutableRefObject<QuadTree>;
-  updateQuadTree: (point: Point, id: string) => void;
+  renderedQuadTree: QuadTree;
+  setRenderedQuadTree: Dispatch<SetStateAction<QuadTree | undefined>>;
+  updateQuadTree: (point: Point) => void;
+  updateRenderedQuadTree: () => void;
 }
 
 const RockPaperScissorsContext = createContext<IRockPaperScissorsContext>(
@@ -22,31 +32,39 @@ const RockPaperScissorsContextProvider = ({
 }: IRockPaperScissorsContextProvider) => {
   const boxRef = useRef<ElementRef<'div'>>(null);
   const quadTree = useRef(new QuadTree(new Rectangle(0, 0, 400, 400), 10));
-  const [initialized, setInitialized] = useState(false);
+
+  const [renderedQuadTree, setRenderedQuadTree] = useState<QuadTree>();
+
+  // useState [...new rock, ...new paper, ...new scissors] default points
 
   useEffect(() => {
-    for (let i = 0; i < 10; i++) {
-      const x = Math.random() * 400;
-      const y = Math.random() * 400;
-      const point = new Point(x, y, `${i}`);
-      quadTree.current.insert(point);
-      // console.log(`Inserted point ${point.id} at (${point.x}, ${point.y})`);
-    }
-    setInitialized(true);
+    QuadTree.CreateQuadTree(quadTree.current);
+    setRenderedQuadTree(quadTree.current);
   }, []);
 
   const updateQuadTree = useCallback((point: Point) => {
     quadTree.current.update(point);
-    // console.log(`Updated point ${point.id} to (${point.x}, ${point.y})`);
   }, []);
 
-  return (
+  const updateRenderedQuadTree = useCallback(() => {
+    console.log('quadTree.current: ', quadTree.current.points.get('0'));
+    setRenderedQuadTree(quadTree.current);
+  }, []);
+
+  return renderedQuadTree ? (
     <RockPaperScissorsContext.Provider
-      value={{ boxRef, quadTree, updateQuadTree }}
+      value={{
+        boxRef,
+        quadTree,
+        renderedQuadTree,
+        setRenderedQuadTree,
+        updateQuadTree,
+        updateRenderedQuadTree
+      }}
     >
-      {initialized ? children : null}
+      {children}
     </RockPaperScissorsContext.Provider>
-  );
+  ) : null;
 };
 
 export { RockPaperScissorsContext, RockPaperScissorsContextProvider };
