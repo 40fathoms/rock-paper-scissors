@@ -1,9 +1,11 @@
+type ElementTypes = 'rock' | 'paper' | 'scissors';
+
 class Point {
   constructor(
     public x: number,
     public y: number,
     public id: string,
-    public color: string
+    public elementType: ElementTypes
   ) {}
 }
 
@@ -56,17 +58,42 @@ class QuadTree {
   }
 
   static CreateQuadTree(quadTree: QuadTree) {
-    for (let i = 0; i < 2; i++) {
-      // const x = Math.random() * 400;
-      // const y = Math.random() * 400;
-      const x = i ? 400 : 0;
-      const y = 240;
+    for (let i = 0; i < 3; i++) {
+      const point = (() => {
+        // rock
+        if (i === 0) {
+          return new Point(200, 0, `${i}`, 'rock');
+        }
 
-      const color = i ? 'red' : 'blue';
+        // paper
+        if (i === 1) {
+          return new Point(0, 400, `${i}`, 'paper');
+        }
 
-      const point = new Point(x, y, `${i}`, color);
+        // scissors
+        return new Point(400, 400, `${i}`, 'scissors');
+      })();
+
       quadTree.insert(point);
     }
+  }
+
+  static GetNumberOfTypes(quadTree: QuadTree) {
+    let rock = 0;
+    let paper = 0;
+    let scissors = 0;
+
+    quadTree.points.forEach((point) => {
+      if (point.elementType === 'rock') {
+        rock++;
+      } else if (point.elementType === 'paper') {
+        paper++;
+      } else if (point.elementType === 'scissors') {
+        scissors++;
+      }
+    });
+
+    return { rock, paper, scissors };
   }
 
   subdivide() {
@@ -163,3 +190,4 @@ class QuadTree {
 }
 
 export { QuadTree, Point, Rectangle };
+export type { ElementTypes };

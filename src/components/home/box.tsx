@@ -1,4 +1,4 @@
-import { useContext, useMemo } from 'react';
+import { useContext } from 'react';
 
 import { Element } from './element';
 
@@ -6,14 +6,7 @@ import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { cn } from '@/utils/cn';
 
 const Box = () => {
-  const { boxRef, renderedQuadTree, quadTree } = useContext(
-    RockPaperScissorsContext
-  );
-
-  const quadTreePoints = useMemo(() => {
-    return Array.from(renderedQuadTree.points.values());
-  }, [renderedQuadTree, quadTree.current]);
-  console.log('quadTreePoints: ', quadTreePoints);
+  const { boxRef, renderedQuadTree } = useContext(RockPaperScissorsContext);
 
   return (
     <div
@@ -29,7 +22,7 @@ const Box = () => {
           id={point.id}
           initialX={point.x}
           initialY={point.y}
-          color={point.color}
+          elementType={point.elementType}
         />
       ))}
     </div>

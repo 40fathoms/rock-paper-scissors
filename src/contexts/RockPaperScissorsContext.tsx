@@ -8,7 +8,8 @@ import type {
 } from 'react';
 import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 
-import { Point, QuadTree, Rectangle } from '@/classes/quadTree';
+import type { Point } from '@/classes/quadTree';
+import { QuadTree, Rectangle } from '@/classes/quadTree';
 
 interface IRockPaperScissorsContext {
   boxRef: RefObject<HTMLDivElement>;
@@ -31,7 +32,7 @@ const RockPaperScissorsContextProvider = ({
   children
 }: IRockPaperScissorsContextProvider) => {
   const boxRef = useRef<ElementRef<'div'>>(null);
-  const quadTree = useRef(new QuadTree(new Rectangle(0, 0, 400, 400), 10));
+  const quadTree = useRef(new QuadTree(new Rectangle(0, 0, 600, 600), 30));
 
   const [renderedQuadTree, setRenderedQuadTree] = useState<QuadTree>();
 
@@ -47,8 +48,18 @@ const RockPaperScissorsContextProvider = ({
   }, []);
 
   const updateRenderedQuadTree = useCallback(() => {
-    console.log('quadTree.current: ', quadTree.current.points.get('0'));
-    setRenderedQuadTree(quadTree.current);
+    setRenderedQuadTree((previousQuadTree) => {
+      if (!previousQuadTree) return;
+
+      const newQuadTree = new QuadTree(
+        previousQuadTree.boundary,
+        previousQuadTree.capacity
+      );
+
+      newQuadTree.points = new Map(quadTree.current.points);
+
+      return newQuadTree;
+    });
   }, []);
 
   return renderedQuadTree ? (
