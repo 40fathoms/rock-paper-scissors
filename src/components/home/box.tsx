@@ -6,7 +6,7 @@ import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { cn } from '@/utils/cn';
 
 const Box = () => {
-  const { boxRef } = useContext(RockPaperScissorsContext);
+  const { boxRef, quadTree } = useContext(RockPaperScissorsContext);
 
   return (
     <div
@@ -16,8 +16,15 @@ const Box = () => {
         'sm:h-[31rem] sm:w-[31rem]'
       ])}
     >
-      {Array.from({ length: 10 }).map((_, index) => (
-        <Element key={index} />
+      {Array.from(quadTree.current.points.values()).map((point) => (
+        <Element
+          key={point.id}
+          id={point.id}
+          initialX={point.x}
+          initialY={point.y}
+          elementDefaultDirection={point.options.direction}
+          elementDefaultType={point.options.elementType}
+        />
       ))}
     </div>
   );
