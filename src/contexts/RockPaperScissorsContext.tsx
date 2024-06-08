@@ -28,7 +28,7 @@ const RockPaperScissorsContextProvider = ({
 
   // useState [...new rock, ...new paper, ...new scissors] default points
 
-  const initializeQuadTree = useCallback((createdQuadTree: QuadTree) => {
+  const initializeQuadTree = useCallback((_createdQuadTree: QuadTree) => {
     setIsInitialized(true);
   }, []);
 
