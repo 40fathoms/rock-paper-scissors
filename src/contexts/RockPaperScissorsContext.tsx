@@ -3,7 +3,6 @@ import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 
 import type { Point } from '@/classes/quadTree';
 import { QuadTree, Rectangle } from '@/classes/quadTree';
-import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
 
 interface IRockPaperScissorsContext {
   boxRef: RefObject<HTMLDivElement>;
@@ -40,12 +39,6 @@ const RockPaperScissorsContextProvider = ({
     QuadTree.CreateQuadTree(quadTree.current, initializeQuadTree);
   }, [initializeQuadTree]);
 
-  const [reRenderCount, setReRenderCount] = useState(0);
-
-  useRequestAnimationFrame(() => {
-    setReRenderCount((prev) => prev + 1);
-  });
-
   return isInitialized ? (
     <RockPaperScissorsContext.Provider
       value={{
@@ -54,7 +47,7 @@ const RockPaperScissorsContextProvider = ({
         updateQuadTree
       }}
     >
-      <div key={reRenderCount}>{children}</div>
+      {children}
     </RockPaperScissorsContext.Provider>
   ) : null;
 };

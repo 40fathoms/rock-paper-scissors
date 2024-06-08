@@ -1,6 +1,6 @@
 import { motion, useMotionValue } from 'framer-motion';
 import type { ElementRef } from 'react';
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import type { ElementTypes } from '@/classes/quadTree';
 import { Point } from '@/classes/quadTree';
@@ -43,9 +43,10 @@ const Element = ({
   // });
   // const direction = useRef(generateRandomCathetuses());
   const direction = useRef(elementDefaultDirection);
-  const elementTypeRef = useRef(elementDefaultType);
 
   const positionRef = useRef<ElementRef<'div'>>(null);
+
+  const [elementType, setElementType] = useState(elementDefaultType);
 
   const x = useMotionValue(initialX);
   const y = useMotionValue(initialY);
@@ -59,39 +60,39 @@ const Element = ({
     const intersectingPointsWithDifferentElementTypes =
       intersectingPoints.filter(
         (intersectingPoint) =>
-          intersectingPoint.options.elementType !== elementTypeRef.current
+          intersectingPoint.options.elementType !== elementType
       );
 
     intersectingPointsWithDifferentElementTypes.forEach((intersectingPoint) => {
       let newElementType = intersectingPoint.options.elementType;
 
       if (
-        elementTypeRef.current === 'rock' &&
+        elementType === 'rock' &&
         intersectingPoint.options.elementType === 'scissors'
       ) {
         newElementType = 'rock';
       } else if (
-        elementTypeRef.current === 'rock' &&
+        elementType === 'rock' &&
         intersectingPoint.options.elementType === 'paper'
       ) {
         newElementType = 'paper';
       } else if (
-        elementTypeRef.current === 'scissors' &&
+        elementType === 'scissors' &&
         intersectingPoint.options.elementType === 'paper'
       ) {
         newElementType = 'scissors';
       } else if (
-        elementTypeRef.current === 'scissors' &&
+        elementType === 'scissors' &&
         intersectingPoint.options.elementType === 'rock'
       ) {
         newElementType = 'rock';
       } else if (
-        elementTypeRef.current === 'paper' &&
+        elementType === 'paper' &&
         intersectingPoint.options.elementType === 'rock'
       ) {
         newElementType = 'paper';
       } else if (
-        elementTypeRef.current === 'rock' &&
+        elementType === 'rock' &&
         intersectingPoint.options.elementType === 'rock'
       ) {
         newElementType = 'rock';
@@ -109,7 +110,7 @@ const Element = ({
 
       updateQuadTree(newPoint);
 
-      elementTypeRef.current = newElementType;
+      setElementType(newElementType);
 
       if (positionRef.current && positionRef.current?.style) {
         positionRef.current.style.backgroundColor =
@@ -120,7 +121,7 @@ const Element = ({
 
   const updatePositionInQuadTree = () => {
     const point = new Point(x.get(), y.get(), id, {
-      elementType: elementTypeRef.current,
+      elementType: elementType,
       direction: direction.current
     });
     updateQuadTree(point);
@@ -135,7 +136,7 @@ const Element = ({
       direction
     });
     updatePositionInQuadTree();
-  });
+  }, [elementType]);
 
   useRequestAnimationFrame(() => {
     updateElementPosition({
@@ -145,7 +146,7 @@ const Element = ({
       direction
     });
     updatePositionInQuadTree();
-  });
+  }, [elementType]);
 
   return (
     <motion.div
@@ -153,11 +154,11 @@ const Element = ({
       style={{
         x,
         y,
-        backgroundColor: elementTypeColor[elementTypeRef.current]
+        backgroundColor: elementTypeColor[elementType]
       }}
       className={cn(['absolute h-6 w-6 bg-white'])}
     >
-      {id} <br /> {elementTypeRef.current}
+      {id} <br /> {elementType}
     </motion.div>
   );
 };
