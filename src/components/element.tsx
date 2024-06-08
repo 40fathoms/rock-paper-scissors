@@ -1,5 +1,6 @@
 import { motion, useMotionValue } from 'framer-motion';
-import { useContext, useRef, useState } from 'react';
+import type { ElementRef } from 'react';
+import { useContext, useRef } from 'react';
 
 import type { ElementTypes } from '@/classes/quadTree';
 import { Point } from '@/classes/quadTree';
@@ -38,8 +39,9 @@ const Element = ({
   );
 
   const direction = useRef(elementDefaultDirection);
+  const elementTypeRef = useRef(elementDefaultType);
 
-  const [elementType, setElementType] = useState(elementDefaultType);
+  const positionRef = useRef<ElementRef<'div'>>(null);
 
   const x = useMotionValue(initialX);
   const y = useMotionValue(initialY);
@@ -53,12 +55,12 @@ const Element = ({
     const intersectingPointsWithDifferentElementTypes =
       intersectingPoints.filter(
         (intersectingPoint) =>
-          intersectingPoint.options.elementType !== elementType
+          intersectingPoint.options.elementType !== elementTypeRef.current
       );
 
     intersectingPointsWithDifferentElementTypes.forEach((intersectingPoint) => {
       const newElementType = determineNewElementType(
-        elementType,
+        elementTypeRef.current,
         intersectingPoint.options.elementType
       );
 
@@ -73,13 +75,14 @@ const Element = ({
       );
 
       updateQuadTree(newPoint);
-      setElementType(newElementType);
+
+      elementTypeRef.current = newElementType;
     });
   };
 
   const updatePositionInQuadTree = () => {
     const point = new Point(x.get(), y.get(), id, {
-      elementType: elementType,
+      elementType: elementTypeRef.current,
       direction: direction.current
     });
     updateQuadTree(point);
@@ -94,7 +97,7 @@ const Element = ({
       direction
     });
     updatePositionInQuadTree();
-  }, [elementType]);
+  }, []);
 
   useRequestAnimationFrame(() => {
     updateElementPosition({
@@ -104,18 +107,19 @@ const Element = ({
       direction
     });
     updatePositionInQuadTree();
-  }, [elementType]);
+  }, []);
 
   return (
     <motion.div
+      ref={positionRef}
       style={{
         x,
         y,
-        backgroundColor: elementTypeColor[elementType]
+        backgroundColor: elementTypeColor[elementTypeRef.current]
       }}
       className={cn(['absolute h-6 w-6 bg-white'])}
     >
-      {id} <br /> {elementType}
+      {id} <br /> {elementTypeRef.current}
     </motion.div>
   );
 };

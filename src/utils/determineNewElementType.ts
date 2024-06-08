@@ -25,8 +25,8 @@ const determineNewElementType: IDetermineNewElementType = (
     return 'rock';
   } else if (currentType === 'paper' && intersectingType === 'rock') {
     return 'paper';
-  } else if (currentType === 'rock' && intersectingType === 'rock') {
-    return 'rock';
+  } else if (currentType === 'paper' && intersectingType === 'scissors') {
+    return 'scissors';
   }
   return currentType;
 };
