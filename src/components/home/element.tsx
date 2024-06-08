@@ -1,8 +1,9 @@
 import { motion, useMotionValue } from 'framer-motion';
-import { useContext, useEffect, useRef } from 'react';
+import type { ElementRef } from 'react';
+import { useContext, useRef } from 'react';
 
 import type { ElementTypes } from '@/classes/quadTree';
-import { Point, QuadTree } from '@/classes/quadTree';
+import { Point } from '@/classes/quadTree';
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
 import { cn } from '@/utils/cn';
@@ -33,8 +34,9 @@ const Element = ({ id, initialX, initialY, elementType }: ElementProps) => {
   //   dy: 0
   // });
   const direction = useRef(generateRandomCathetuses());
-  const positionRef = useRef(null);
   const elementTypeRef = useRef(elementType);
+
+  const positionRef = useRef<ElementRef<'div'>>(null);
 
   const x = useMotionValue(initialX);
   const y = useMotionValue(initialY);
@@ -91,7 +93,7 @@ const Element = ({ id, initialX, initialY, elementType }: ElementProps) => {
 
       elementTypeRef.current = newElementType;
 
-      if (positionRef.current && positionRef.current.style) {
+      if (positionRef.current && positionRef.current?.style) {
         positionRef.current.style.backgroundColor =
           elementTypeColor[newElementType];
       }
