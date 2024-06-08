@@ -19,7 +19,7 @@ interface ElementProps {
   elementDefaultDirection: CathetusesDirection;
 }
 
-const detectionRange = 24; // Define the detection range
+const detectionRange = 30; // Define the detection range
 
 const elementTypeColor: Record<ElementTypes, string> = {
   rock: 'red',
