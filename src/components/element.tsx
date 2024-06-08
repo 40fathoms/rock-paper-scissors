@@ -1,6 +1,5 @@
 import { motion, useMotionValue } from 'framer-motion';
-import type { ElementRef } from 'react';
-import { useContext, useRef } from 'react';
+import { useContext, useRef, useState } from 'react';
 
 import type { ElementTypes } from '@/classes/quadTree';
 import { Point } from '@/classes/quadTree';
@@ -19,7 +18,7 @@ interface ElementProps {
   elementDefaultDirection: CathetusesDirection;
 }
 
-const detectionRange = 30; // Define the detection range
+const detectionRange = 35; // Define the detection range
 
 const elementTypeColor: Record<ElementTypes, string> = {
   rock: 'red',
@@ -41,7 +40,7 @@ const Element = ({
   const direction = useRef(elementDefaultDirection);
   const elementTypeRef = useRef(elementDefaultType);
 
-  const positionRef = useRef<ElementRef<'div'>>(null);
+  const [elementType, setElementType] = useState(elementDefaultType);
 
   const x = useMotionValue(initialX);
   const y = useMotionValue(initialY);
@@ -77,6 +76,7 @@ const Element = ({
       updateQuadTree(newPoint);
 
       elementTypeRef.current = newElementType;
+      setElementType(newElementType);
     });
   };
 
@@ -111,15 +111,17 @@ const Element = ({
 
   return (
     <motion.div
-      ref={positionRef}
+      key={elementType}
       style={{
         x,
         y,
-        backgroundColor: elementTypeColor[elementTypeRef.current]
+        backgroundColor: elementTypeColor[elementType]
+        // backgroundColor: elementTypeColor[elementTypeRef.current]
       }}
-      className={cn(['absolute h-6 w-6 bg-white'])}
+      className={cn(['absolute h-5 w-5 bg-white'])}
     >
-      {id} <br /> {elementTypeRef.current}
+      {id} <br /> {elementType}
+      {/* {id} <br /> {elementTypeRef.current} */}
     </motion.div>
   );
 };

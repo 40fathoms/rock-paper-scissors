@@ -1,23 +1,15 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 
 import { Element } from './element';
 
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { cn } from '@/utils/cn';
-import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
 
 const Box = () => {
   const { boxRef, quadTree } = useContext(RockPaperScissorsContext);
 
-  const [renderCount, setRenderCount] = useState(0);
-
-  useRequestAnimationFrame(() => {
-    setRenderCount((prev) => prev + 1);
-  }, []);
-
   return (
     <div
-      key={String(renderCount)}
       ref={boxRef}
       className={cn([
         'relative h-96 w-96 border-2 border-white',
