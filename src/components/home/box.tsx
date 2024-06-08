@@ -22,7 +22,8 @@ const Box = () => {
           id={point.id}
           initialX={point.x}
           initialY={point.y}
-          elementType={point.elementType}
+          elementDefaultDirection={point.options.direction}
+          elementDefaultType={point.options.elementType}
         />
       ))}
     </div>

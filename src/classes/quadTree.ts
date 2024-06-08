@@ -1,3 +1,8 @@
+import {
+  generateRandomCathetuses,
+  type CathetusesDirection
+} from '@/utils/generateRandomCathetuses';
+
 type ElementTypes = 'rock' | 'paper' | 'scissors';
 
 class Point {
@@ -5,7 +10,10 @@ class Point {
     public x: number,
     public y: number,
     public id: string,
-    public elementType: ElementTypes
+    public options: {
+      direction: CathetusesDirection;
+      elementType: ElementTypes;
+    }
   ) {}
 }
 
@@ -57,29 +65,41 @@ class QuadTree {
     this.southwest = null;
   }
 
-  static CreateQuadTree(quadTree: QuadTree, callback?: () => void) {
+  static CreateQuadTree(
+    quadTree: QuadTree,
+    callback?: (createdQuadTree: QuadTree) => void
+  ) {
     for (let i = 0; i < 100; i++) {
       const point = (() => {
         const newElement = Math.floor(Math.random() * 3);
 
         // rock
         if (newElement === 0) {
-          return new Point(200, 0, `${i}`, 'rock');
+          return new Point(200, 0, `${i}`, {
+            direction: generateRandomCathetuses(),
+            elementType: 'rock'
+          });
         }
 
         // paper
         if (newElement === 1) {
-          return new Point(0, 400, `${i}`, 'paper');
+          return new Point(0, 400, `${i}`, {
+            direction: generateRandomCathetuses(),
+            elementType: 'paper'
+          });
         }
 
         // scissors
-        return new Point(400, 400, `${i}`, 'scissors');
+        return new Point(400, 400, `${i}`, {
+          direction: generateRandomCathetuses(),
+          elementType: 'scissors'
+        });
       })();
 
       quadTree.insert(point);
     }
 
-    if (callback) callback();
+    if (callback) callback(quadTree);
   }
 
   static GetNumberOfTypes(quadTree: QuadTree) {
@@ -88,11 +108,11 @@ class QuadTree {
     let scissors = 0;
 
     quadTree.points.forEach((point) => {
-      if (point.elementType === 'rock') {
+      if (point.options.elementType === 'rock') {
         rock++;
-      } else if (point.elementType === 'paper') {
+      } else if (point.options.elementType === 'paper') {
         paper++;
-      } else if (point.elementType === 'scissors') {
+      } else if (point.options.elementType === 'scissors') {
         scissors++;
       }
     });
