@@ -22,7 +22,7 @@ const RockPaperScissorsContextProvider = ({
   children
 }: IRockPaperScissorsContextProvider) => {
   const boxRef = useRef<ElementRef<'div'>>(null);
-  const quadTree = useRef(new QuadTree(new Rectangle(0, 0, 600, 600), 30));
+  const quadTree = useRef(new QuadTree(new Rectangle(0, 0, 600, 600), 100));
   const [isInitialized, setIsInitialized] = useState(false);
 
   // useState [...new rock, ...new paper, ...new scissors] default points

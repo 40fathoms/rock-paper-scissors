@@ -118,7 +118,7 @@ const Element = ({
         backgroundColor: elementTypeColor[elementType]
         // backgroundColor: elementTypeColor[elementTypeRef.current]
       }}
-      className={cn(['absolute h-5 w-5 bg-white'])}
+      className={cn(['absolute h-4 w-4 bg-white'])}
     >
       {id} <br /> {elementType}
       {/* {id} <br /> {elementTypeRef.current} */}

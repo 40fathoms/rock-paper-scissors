@@ -75,7 +75,7 @@ class QuadTree {
 
         // rock
         if (newElement === 0) {
-          return new Point(150, 0, `${i}`, {
+          return new Point(190, 50, `${i}`, {
             direction: generateRandomCathetuses(),
             elementType: 'rock'
           });
@@ -83,14 +83,14 @@ class QuadTree {
 
         // paper
         if (newElement === 1) {
-          return new Point(0, 250, `${i}`, {
+          return new Point(50, 300, `${i}`, {
             direction: generateRandomCathetuses(),
             elementType: 'paper'
           });
         }
 
         // scissors
-        return new Point(250, 250, `${i}`, {
+        return new Point(300, 300, `${i}`, {
           direction: generateRandomCathetuses(),
           elementType: 'scissors'
         });
