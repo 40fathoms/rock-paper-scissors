@@ -16,7 +16,7 @@ interface ElementProps {
   elementType: ElementTypes;
 }
 
-const DETECTION_RANGE = 24; // Define the detection range
+const detectionRange = 24; // Define the detection range
 
 const elementTypeColor: Record<ElementTypes, string> = {
   rock: 'red',
@@ -25,61 +25,56 @@ const elementTypeColor: Record<ElementTypes, string> = {
 };
 
 const Element = ({ id, initialX, initialY, elementType }: ElementProps) => {
-  const {
-    boxRef,
-    quadTree,
-    updateQuadTree,
-    setRenderedQuadTree,
-    renderedQuadTree,
-    updateRenderedQuadTree
-  } = useContext(RockPaperScissorsContext);
-  const direction = useRef({
-    dx: 1,
-    dy: 0
-  });
-  // const direction = useRef(generateRandomCathetuses());
+  const { boxRef, quadTree, updateQuadTree } = useContext(
+    RockPaperScissorsContext
+  );
+  // const direction = useRef({
+  //   dx: 1,
+  //   dy: 0
+  // });
+  const direction = useRef(generateRandomCathetuses());
   const positionRef = useRef(null);
+  const elementTypeRef = useRef(elementType);
 
   const x = useMotionValue(initialX);
   const y = useMotionValue(initialY);
 
-  const handleCollisions = () => {
-    const point = new Point(x.get(), y.get(), id, elementType);
+  const handleCollisions = (point: Point) => {
     const intersectingPoints = quadTree.current.pointsInRange(
       point,
-      DETECTION_RANGE
+      detectionRange
     );
 
     intersectingPoints.forEach((intersectingPoint) => {
       let newElementType = intersectingPoint.elementType;
 
       if (
-        elementType === 'rock' &&
+        elementTypeRef.current === 'rock' &&
         intersectingPoint.elementType === 'scissors'
       ) {
         newElementType = 'rock';
       } else if (
-        elementType === 'rock' &&
+        elementTypeRef.current === 'rock' &&
         intersectingPoint.elementType === 'paper'
       ) {
         newElementType = 'paper';
       } else if (
-        elementType === 'scissors' &&
+        elementTypeRef.current === 'scissors' &&
         intersectingPoint.elementType === 'paper'
       ) {
         newElementType = 'scissors';
       } else if (
-        elementType === 'scissors' &&
+        elementTypeRef.current === 'scissors' &&
         intersectingPoint.elementType === 'rock'
       ) {
         newElementType = 'rock';
       } else if (
-        elementType === 'paper' &&
+        elementTypeRef.current === 'paper' &&
         intersectingPoint.elementType === 'rock'
       ) {
         newElementType = 'paper';
       } else if (
-        elementType === 'rock' &&
+        elementTypeRef.current === 'rock' &&
         intersectingPoint.elementType === 'rock'
       ) {
         newElementType = 'rock';
@@ -94,6 +89,8 @@ const Element = ({ id, initialX, initialY, elementType }: ElementProps) => {
 
       updateQuadTree(newPoint);
 
+      elementTypeRef.current = newElementType;
+
       if (positionRef.current && positionRef.current.style) {
         positionRef.current.style.backgroundColor =
           elementTypeColor[newElementType];
@@ -102,15 +99,15 @@ const Element = ({ id, initialX, initialY, elementType }: ElementProps) => {
   };
 
   const updatePositionInQuadTree = () => {
-    const point = new Point(x.get(), y.get(), id, elementType);
+    const point = new Point(x.get(), y.get(), id, elementTypeRef.current);
     updateQuadTree(point);
-    handleCollisions();
+    handleCollisions(point);
   };
 
-  useRequestAnimationFrame(() => {
-    const occurrences = QuadTree.GetNumberOfTypes(quadTree.current);
-    console.log('occurrences: ', occurrences);
-  });
+  // useRequestAnimationFrame(() => {
+  //   const occurrences = QuadTree.GetNumberOfTypes(quadTree.current);
+  //   console.log('occurrences: ', occurrences);
+  // });
 
   useRequestAnimationFrame(() => {
     updateElementPosition({
@@ -135,9 +132,16 @@ const Element = ({ id, initialX, initialY, elementType }: ElementProps) => {
   return (
     <motion.div
       ref={positionRef}
-      style={{ x, y, backgroundColor: elementTypeColor[elementType] }}
+      style={{
+        x,
+        y,
+        backgroundColor: elementTypeColor[elementTypeRef.current]
+      }}
       className={cn(['absolute h-6 w-6 bg-white'])}
-    />
+    >
+      {id} <br />
+      {elementTypeRef.current}
+    </motion.div>
   );
 };
 

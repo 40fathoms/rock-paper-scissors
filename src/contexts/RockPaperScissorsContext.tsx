@@ -1,11 +1,4 @@
-import type {
-  Dispatch,
-  ElementRef,
-  MutableRefObject,
-  ReactNode,
-  RefObject,
-  SetStateAction
-} from 'react';
+import type { ElementRef, MutableRefObject, ReactNode, RefObject } from 'react';
 import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 
 import type { Point } from '@/classes/quadTree';
@@ -14,10 +7,7 @@ import { QuadTree, Rectangle } from '@/classes/quadTree';
 interface IRockPaperScissorsContext {
   boxRef: RefObject<HTMLDivElement>;
   quadTree: MutableRefObject<QuadTree>;
-  renderedQuadTree: QuadTree;
-  setRenderedQuadTree: Dispatch<SetStateAction<QuadTree | undefined>>;
   updateQuadTree: (point: Point) => void;
-  updateRenderedQuadTree: () => void;
 }
 
 const RockPaperScissorsContext = createContext<IRockPaperScissorsContext>(
@@ -33,44 +23,28 @@ const RockPaperScissorsContextProvider = ({
 }: IRockPaperScissorsContextProvider) => {
   const boxRef = useRef<ElementRef<'div'>>(null);
   const quadTree = useRef(new QuadTree(new Rectangle(0, 0, 600, 600), 30));
-
-  const [renderedQuadTree, setRenderedQuadTree] = useState<QuadTree>();
+  const [isInitialized, setIsInitialized] = useState(false);
 
   // useState [...new rock, ...new paper, ...new scissors] default points
 
-  useEffect(() => {
-    QuadTree.CreateQuadTree(quadTree.current);
-    setRenderedQuadTree(quadTree.current);
+  const initializeQuadTree = useCallback(() => {
+    setIsInitialized(true);
   }, []);
 
   const updateQuadTree = useCallback((point: Point) => {
     quadTree.current.update(point);
   }, []);
 
-  const updateRenderedQuadTree = useCallback(() => {
-    setRenderedQuadTree((previousQuadTree) => {
-      if (!previousQuadTree) return;
+  useEffect(() => {
+    QuadTree.CreateQuadTree(quadTree.current, initializeQuadTree);
+  }, [initializeQuadTree]);
 
-      const newQuadTree = new QuadTree(
-        previousQuadTree.boundary,
-        previousQuadTree.capacity
-      );
-
-      newQuadTree.points = new Map(quadTree.current.points);
-
-      return newQuadTree;
-    });
-  }, []);
-
-  return renderedQuadTree ? (
+  return isInitialized ? (
     <RockPaperScissorsContext.Provider
       value={{
         boxRef,
         quadTree,
-        renderedQuadTree,
-        setRenderedQuadTree,
-        updateQuadTree,
-        updateRenderedQuadTree
+        updateQuadTree
       }}
     >
       {children}

@@ -57,16 +57,18 @@ class QuadTree {
     this.southwest = null;
   }
 
-  static CreateQuadTree(quadTree: QuadTree) {
-    for (let i = 0; i < 3; i++) {
+  static CreateQuadTree(quadTree: QuadTree, callback?: () => void) {
+    for (let i = 0; i < 100; i++) {
       const point = (() => {
+        const newElement = Math.floor(Math.random() * 3);
+
         // rock
-        if (i === 0) {
+        if (newElement === 0) {
           return new Point(200, 0, `${i}`, 'rock');
         }
 
         // paper
-        if (i === 1) {
+        if (newElement === 1) {
           return new Point(0, 400, `${i}`, 'paper');
         }
 
@@ -76,6 +78,8 @@ class QuadTree {
 
       quadTree.insert(point);
     }
+
+    if (callback) callback();
   }
 
   static GetNumberOfTypes(quadTree: QuadTree) {
