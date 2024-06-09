@@ -1,8 +1,3 @@
-import {
-  generateRandomCathetuses,
-  type CathetusesDirection
-} from '@/utils/generateRandomCathetuses';
-
 type ElementTypes = 'rock' | 'paper' | 'scissors';
 
 class Point {
@@ -10,10 +5,7 @@ class Point {
     public x: number,
     public y: number,
     public id: string,
-    public options: {
-      direction: CathetusesDirection;
-      elementType: ElementTypes;
-    }
+    public elementType: ElementTypes
   ) {}
 }
 
@@ -75,25 +67,16 @@ class QuadTree {
 
         // rock
         if (newElement === 0) {
-          return new Point(190, 50, `${i}`, {
-            direction: generateRandomCathetuses(),
-            elementType: 'rock'
-          });
+          return new Point(190, 50, `${i}`, 'rock');
         }
 
         // paper
         if (newElement === 1) {
-          return new Point(50, 300, `${i}`, {
-            direction: generateRandomCathetuses(),
-            elementType: 'paper'
-          });
+          return new Point(50, 300, `${i}`, 'paper');
         }
 
         // scissors
-        return new Point(300, 300, `${i}`, {
-          direction: generateRandomCathetuses(),
-          elementType: 'scissors'
-        });
+        return new Point(300, 300, `${i}`, 'scissors');
       })();
 
       quadTree.insert(point);
@@ -108,11 +91,11 @@ class QuadTree {
     let scissors = 0;
 
     quadTree.points.forEach((point) => {
-      if (point.options.elementType === 'rock') {
+      if (point.elementType === 'rock') {
         rock++;
-      } else if (point.options.elementType === 'paper') {
+      } else if (point.elementType === 'paper') {
         paper++;
-      } else if (point.options.elementType === 'scissors') {
+      } else if (point.elementType === 'scissors') {
         scissors++;
       }
     });
@@ -202,11 +185,6 @@ class QuadTree {
       if (range.contains(point)) {
         found.push(point);
       }
-    }
-
-    if (this.divided) {
-      // Recursively search in child nodes...
-      // Add points found in child nodes to the found array...
     }
 
     return found;

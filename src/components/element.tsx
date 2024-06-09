@@ -6,7 +6,7 @@ import { Point } from '@/classes/quadTree';
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
 import { cn } from '@/utils/cn';
-import type { CathetusesDirection } from '@/utils/generateRandomCathetuses';
+import { generateRandomCathetuses } from '@/utils/generateRandomCathetuses';
 import { updateElementPosition } from '@/utils/updateElementPosition';
 import { determineNewElementType } from '@/utils/determineNewElementType';
 import { Paper, Rock, Scissors } from './icons';
@@ -16,7 +16,6 @@ interface ElementProps {
   initialX: number;
   initialY: number;
   elementDefaultType: ElementTypes;
-  elementDefaultDirection: CathetusesDirection;
 }
 
 const detectionRange = 40; // Define the detection range
@@ -31,14 +30,13 @@ const Element = ({
   id,
   initialX,
   initialY,
-  elementDefaultType,
-  elementDefaultDirection
+  elementDefaultType
 }: ElementProps) => {
   const { boxRef, quadTree, updateQuadTree } = useContext(
     RockPaperScissorsContext
   );
 
-  const direction = useRef(elementDefaultDirection);
+  const direction = useRef(generateRandomCathetuses());
   const [elementType, setElementType] = useState(elementDefaultType);
 
   const x = useMotionValue(initialX);
@@ -52,24 +50,20 @@ const Element = ({
 
     const intersectingPointsWithDifferentElementTypes =
       intersectingPoints.filter(
-        (intersectingPoint) =>
-          intersectingPoint.options.elementType !== elementType
+        (intersectingPoint) => intersectingPoint.elementType !== elementType
       );
 
     intersectingPointsWithDifferentElementTypes.forEach((intersectingPoint) => {
       const newElementType = determineNewElementType(
         elementType,
-        intersectingPoint.options.elementType
+        intersectingPoint.elementType
       );
 
       const newPoint = new Point(
         intersectingPoint.x,
         intersectingPoint.y,
         intersectingPoint.id,
-        {
-          elementType: newElementType,
-          direction: intersectingPoint.options.direction
-        }
+        newElementType
       );
 
       updateQuadTree(newPoint);
@@ -79,10 +73,7 @@ const Element = ({
   };
 
   const updatePositionInQuadTree = () => {
-    const point = new Point(x.get(), y.get(), id, {
-      elementType: elementType,
-      direction: direction.current
-    });
+    const point = new Point(x.get(), y.get(), id, elementType);
     updateQuadTree(point);
     handleCollisions(point);
   };
