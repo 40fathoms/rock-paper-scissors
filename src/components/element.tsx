@@ -38,8 +38,6 @@ const Element = ({
   );
 
   const direction = useRef(elementDefaultDirection);
-  const elementTypeRef = useRef(elementDefaultType);
-
   const [elementType, setElementType] = useState(elementDefaultType);
 
   const x = useMotionValue(initialX);
@@ -54,12 +52,12 @@ const Element = ({
     const intersectingPointsWithDifferentElementTypes =
       intersectingPoints.filter(
         (intersectingPoint) =>
-          intersectingPoint.options.elementType !== elementTypeRef.current
+          intersectingPoint.options.elementType !== elementType
       );
 
     intersectingPointsWithDifferentElementTypes.forEach((intersectingPoint) => {
       const newElementType = determineNewElementType(
-        elementTypeRef.current,
+        elementType,
         intersectingPoint.options.elementType
       );
 
@@ -75,14 +73,13 @@ const Element = ({
 
       updateQuadTree(newPoint);
 
-      elementTypeRef.current = newElementType;
       setElementType(newElementType);
     });
   };
 
   const updatePositionInQuadTree = () => {
     const point = new Point(x.get(), y.get(), id, {
-      elementType: elementTypeRef.current,
+      elementType: elementType,
       direction: direction.current
     });
     updateQuadTree(point);
@@ -97,7 +94,7 @@ const Element = ({
       direction
     });
     updatePositionInQuadTree();
-  }, []);
+  }, [elementType]);
 
   useRequestAnimationFrame(() => {
     updateElementPosition({
@@ -107,7 +104,7 @@ const Element = ({
       direction
     });
     updatePositionInQuadTree();
-  }, []);
+  }, [elementType]);
 
   return (
     <motion.div
@@ -116,12 +113,10 @@ const Element = ({
         x,
         y,
         backgroundColor: elementTypeColor[elementType]
-        // backgroundColor: elementTypeColor[elementTypeRef.current]
       }}
       className={cn(['absolute h-4 w-4 bg-white'])}
     >
       {id} <br /> {elementType}
-      {/* {id} <br /> {elementTypeRef.current} */}
     </motion.div>
   );
 };
