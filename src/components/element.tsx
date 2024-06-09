@@ -9,6 +9,7 @@ import { cn } from '@/utils/cn';
 import type { CathetusesDirection } from '@/utils/generateRandomCathetuses';
 import { updateElementPosition } from '@/utils/updateElementPosition';
 import { determineNewElementType } from '@/utils/determineNewElementType';
+import { Paper, Rock, Scissors } from './icons';
 
 interface ElementProps {
   id: string;
@@ -20,10 +21,10 @@ interface ElementProps {
 
 const detectionRange = 35; // Define the detection range
 
-const elementTypeColor: Record<ElementTypes, string> = {
-  rock: 'red',
-  paper: 'blue',
-  scissors: 'green'
+const elementTypeIcon: Record<ElementTypes, JSX.Element> = {
+  rock: <Rock />,
+  paper: <Paper />,
+  scissors: <Scissors />
 };
 
 const Element = ({
@@ -111,12 +112,11 @@ const Element = ({
       key={elementType}
       style={{
         x,
-        y,
-        backgroundColor: elementTypeColor[elementType]
+        y
       }}
-      className={cn(['absolute h-4 w-4 bg-white'])}
+      className={cn(['absolute h-4 w-4'])}
     >
-      {id} <br /> {elementType}
+      {elementTypeIcon[elementType]}
     </motion.div>
   );
 };
