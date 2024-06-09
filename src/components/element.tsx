@@ -19,7 +19,7 @@ interface ElementProps {
   elementDefaultDirection: CathetusesDirection;
 }
 
-const detectionRange = 35; // Define the detection range
+const detectionRange = 40; // Define the detection range
 
 const elementTypeIcon: Record<ElementTypes, JSX.Element> = {
   rock: <Rock />,
