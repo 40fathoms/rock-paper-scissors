@@ -3,6 +3,7 @@ import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 
 import type { Point } from '@/classes/quadTree';
 import { QuadTree, Rectangle } from '@/classes/quadTree';
+import { useScreenSize } from '@/hooks/useScreenSize';
 
 interface IRockPaperScissorsContext {
   boxRef: RefObject<HTMLDivElement>;
@@ -24,6 +25,8 @@ const RockPaperScissorsContextProvider = ({
   const boxRef = useRef<ElementRef<'div'>>(null);
   const quadTree = useRef(new QuadTree(new Rectangle(0, 0, 600, 600), 100));
   const [isInitialized, setIsInitialized] = useState(false);
+
+  // const { width } = useScreenSize();
 
   // useState [...new rock, ...new paper, ...new scissors] default points
 

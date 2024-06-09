@@ -101,10 +101,7 @@ const Element = ({
   return (
     <motion.div
       key={elementType}
-      style={{
-        x,
-        y
-      }}
+      style={{ x, y }}
       className={cn(['absolute h-4 w-4'])}
     >
       {elementTypeIcon[elementType]}
