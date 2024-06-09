@@ -1,21 +1,31 @@
 type ElementTypes = 'rock' | 'paper' | 'scissors';
 
 class Point {
-  constructor(
-    public x: number,
-    public y: number,
-    public id: string,
-    public elementType: ElementTypes
-  ) {}
+  public x: number;
+  public y: number;
+  public id: string;
+  public elementType: ElementTypes;
+
+  constructor(x: number, y: number, id: string, elementType: ElementTypes) {
+    this.x = x;
+    this.y = y;
+    this.id = id;
+    this.elementType = elementType;
+  }
 }
 
 class Rectangle {
-  constructor(
-    public x: number,
-    public y: number,
-    public width: number,
-    public height: number
-  ) {}
+  public x: number;
+  public y: number;
+  public width: number;
+  public height: number;
+
+  constructor(x: number, y: number, width: number, height: number) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+  }
 
   /**
    * Checks if a given point is contained within the rectangle.
@@ -50,14 +60,14 @@ class Rectangle {
 }
 
 class QuadTree {
-  boundary: Rectangle;
-  capacity: number;
-  points: Map<string, Point>;
-  divided: boolean;
-  northeast: QuadTree | null;
-  northwest: QuadTree | null;
-  southeast: QuadTree | null;
-  southwest: QuadTree | null;
+  public boundary: Rectangle;
+  public capacity: number;
+  public points: Map<string, Point>;
+  public divided: boolean;
+  public northeast: QuadTree | null;
+  public northwest: QuadTree | null;
+  public southeast: QuadTree | null;
+  public southwest: QuadTree | null;
 
   constructor(boundary: Rectangle, capacity: number) {
     this.boundary = boundary;
@@ -70,61 +80,24 @@ class QuadTree {
     this.southwest = null;
   }
 
+  /**
+   * Inserts points from an array in an initialized QuadTree.
+   *
+   * @param {QuadTree} quadTree - The QuadTree to add points into.
+   * @param {Point[]} initialPoints - The points to be inserted into the QuadTree.
+   * @param {(createdQuadTree: QuadTree) => void} [callback] - The callback function to be called after the QuadTree is updated.
+   * @return {void}
+   */
   static CreateQuadTree(
     quadTree: QuadTree,
+    initialPoints: Point[],
     callback?: (createdQuadTree: QuadTree) => void
   ) {
-    for (let i = 0; i < 100; i++) {
-      const point = (() => {
-        const newElement = Math.floor(Math.random() * 3);
-
-        // rock
-        if (newElement === 0) {
-          return new Point(190, 50, `${i}`, 'rock');
-        }
-
-        // paper
-        if (newElement === 1) {
-          return new Point(50, 300, `${i}`, 'paper');
-        }
-
-        // scissors
-        return new Point(300, 300, `${i}`, 'scissors');
-      })();
-
+    initialPoints.forEach((point) => {
       quadTree.insert(point);
-    }
-
-    if (callback) callback(quadTree);
-  }
-
-  /**
-   * Returns an object containing the number of rock, paper, and scissors points
-   * in the given QuadTree.
-   *
-   * @param {QuadTree} quadTree - The QuadTree to count the types of points in.
-   * @return {Object} An object containing the number of rock, paper, and scissors
-   * points in the given QuadTree.
-   * @property {number} rock - The number of rock points in the QuadTree.
-   * @property {number} paper - The number of paper points in the QuadTree.
-   * @property {number} scissors - The number of scissors points in the QuadTree.
-   */
-  static GetNumberOfTypes(quadTree: QuadTree) {
-    let rock = 0;
-    let paper = 0;
-    let scissors = 0;
-
-    quadTree.points.forEach((point) => {
-      if (point.elementType === 'rock') {
-        rock++;
-      } else if (point.elementType === 'paper') {
-        paper++;
-      } else if (point.elementType === 'scissors') {
-        scissors++;
-      }
     });
 
-    return { rock, paper, scissors };
+    if (callback) callback(quadTree);
   }
 
   /**

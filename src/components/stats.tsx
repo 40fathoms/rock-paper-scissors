@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { cn } from '@/utils/cn';
 import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
-import { QuadTree } from '@/classes/quadTree';
+import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
 
 const Stats = () => {
   const { quadTree } = useContext(RockPaperScissorsContext);
@@ -13,7 +13,7 @@ const Stats = () => {
   const [scissorsOccurences, setScissorsOccurrences] = useState(0);
 
   useRequestAnimationFrame(() => {
-    const { rock, paper, scissors } = QuadTree.GetNumberOfTypes(
+    const { rock, paper, scissors } = RockPaperScissorPoints.GetNumberOfTypes(
       quadTree.current
     );
 

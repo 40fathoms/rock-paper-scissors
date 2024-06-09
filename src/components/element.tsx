@@ -1,15 +1,15 @@
 import { motion, useMotionValue } from 'framer-motion';
 import { useContext, useRef, useState } from 'react';
 
-import type { ElementTypes } from '@/classes/quadTree';
-import { Point } from '@/classes/quadTree';
+import type { ElementTypes } from '@/classes/QuadTree';
+import { Point } from '@/classes/QuadTree';
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
 import { cn } from '@/utils/cn';
 import { generateRandomCathetuses } from '@/utils/generateRandomCathetuses';
 import { updateElementPosition } from '@/utils/updateElementPosition';
-import { determineNewElementType } from '@/utils/determineNewElementType';
 import { Paper, Rock, Scissors } from './icons';
+import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
 
 interface ElementProps {
   id: string;
@@ -54,7 +54,7 @@ const Element = ({
       );
 
     intersectingPointsWithDifferentElementTypes.forEach((intersectingPoint) => {
-      const newElementType = determineNewElementType(
+      const newElementType = RockPaperScissorPoints.determineNewElementType(
         elementType,
         intersectingPoint.elementType
       );

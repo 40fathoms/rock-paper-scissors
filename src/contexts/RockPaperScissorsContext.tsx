@@ -1,9 +1,10 @@
 import type { ElementRef, MutableRefObject, ReactNode, RefObject } from 'react';
 import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 
-import type { Point } from '@/classes/quadTree';
-import { QuadTree, Rectangle } from '@/classes/quadTree';
+import type { Point } from '@/classes/QuadTree';
+import { QuadTree, Rectangle } from '@/classes/QuadTree';
 import { useScreenSize } from '@/hooks/useScreenSize';
+import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
 
 interface IRockPaperScissorsContext {
   boxRef: RefObject<HTMLDivElement>;
@@ -22,13 +23,25 @@ interface IRockPaperScissorsContextProvider {
 const RockPaperScissorsContextProvider = ({
   children
 }: IRockPaperScissorsContextProvider) => {
+  const { width: screenWidth } = useScreenSize();
+
   const boxRef = useRef<ElementRef<'div'>>(null);
   const quadTree = useRef(new QuadTree(new Rectangle(0, 0, 600, 600), 100));
   const [isInitialized, setIsInitialized] = useState(false);
 
-  // const { width } = useScreenSize();
-
-  // useState [...new rock, ...new paper, ...new scissors] default points
+  const [initialPoints, _setInitialPoints] = useState<Point[]>(
+    new RockPaperScissorPoints(
+      {
+        rock: 30,
+        paper: 30,
+        scissors: 30
+      },
+      {
+        screenWidth
+      }
+    ).createdPoints
+  );
+  console.log('initialPoints: ', initialPoints);
 
   const initializeQuadTree = useCallback((_createdQuadTree: QuadTree) => {
     setIsInitialized(true);
@@ -39,7 +52,11 @@ const RockPaperScissorsContextProvider = ({
   }, []);
 
   useEffect(() => {
-    QuadTree.CreateQuadTree(quadTree.current, initializeQuadTree);
+    QuadTree.CreateQuadTree(
+      quadTree.current,
+      initialPoints,
+      initializeQuadTree
+    );
   }, [initializeQuadTree]);
 
   return isInitialized ? (
