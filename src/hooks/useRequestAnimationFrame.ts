@@ -25,6 +25,7 @@ const useRequestAnimationFrame: IUseRequestAnimationFrame = (
     animateElement();
 
     return () => cancelAnimationFrame(animationId);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, dependencyArray);
 };
 
