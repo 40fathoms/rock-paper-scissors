@@ -3,8 +3,8 @@ import { createContext, useCallback, useEffect, useRef, useState } from 'react';
 
 import type { Point } from '@/classes/QuadTree';
 import { QuadTree, Rectangle } from '@/classes/QuadTree';
-import { useScreenSize } from '@/hooks/useScreenSize';
 import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
+import { useScreenSize } from '@/hooks/useScreenSize';
 
 interface IRockPaperScissorsContext {
   boxRef: RefObject<HTMLDivElement>;
@@ -41,9 +41,8 @@ const RockPaperScissorsContextProvider = ({
       }
     ).createdPoints
   );
-  console.log('initialPoints: ', initialPoints);
 
-  const initializeQuadTree = useCallback((_createdQuadTree: QuadTree) => {
+  const initializeQuadTree = useCallback(() => {
     setIsInitialized(true);
   }, []);
 
@@ -57,7 +56,7 @@ const RockPaperScissorsContextProvider = ({
       initialPoints,
       initializeQuadTree
     );
-  }, [initializeQuadTree]);
+  }, [initializeQuadTree, initialPoints]);
 
   return isInitialized ? (
     <RockPaperScissorsContext.Provider

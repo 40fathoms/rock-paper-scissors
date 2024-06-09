@@ -1,9 +1,9 @@
 import { useContext, useState } from 'react';
 
-import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
-import { cn } from '@/utils/cn';
-import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
 import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
+import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
+import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
+import { cn } from '@/utils/cn';
 
 const Stats = () => {
   const { quadTree } = useContext(RockPaperScissorsContext);

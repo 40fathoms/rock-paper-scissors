@@ -1,15 +1,16 @@
 import { motion, useMotionValue } from 'framer-motion';
 import { useContext, useRef, useState } from 'react';
 
+import { Paper, Rock, Scissors } from './icons';
+
 import type { ElementTypes } from '@/classes/QuadTree';
 import { Point } from '@/classes/QuadTree';
+import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
 import { cn } from '@/utils/cn';
 import { generateRandomCathetuses } from '@/utils/generateRandomCathetuses';
 import { updateElementPosition } from '@/utils/updateElementPosition';
-import { Paper, Rock, Scissors } from './icons';
-import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
 
 interface ElementProps {
   id: string;
