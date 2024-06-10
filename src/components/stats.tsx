@@ -1,5 +1,8 @@
 import { useContext, useState } from 'react';
 
+import paper from '@/assets/paper.png';
+import rock from '@/assets/rock.png';
+import scissors from '@/assets/scissors.png';
 import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
@@ -25,23 +28,23 @@ const Stats = () => {
   return (
     <ul
       className={cn([
-        'flex flex-row gap-6',
-        '[&>li]:flex [&>li]:flex-col [&>li]:items-center [&>li]:gap-1'
+        'flex flex-row gap-10',
+        '[&>li]:flex [&>li]:flex-row [&>li]:items-center [&>li]:gap-3'
       ])}
     >
       <li>
-        <p>Rock</p>
-        <p>{rockOccurences}</p>
+        <img src={rock} alt="rock" className={cn(['h-6 w-6'])} />
+        <span>Rock: {rockOccurences}</span>
       </li>
 
       <li>
-        <p>Paper</p>
-        <p>{paperOccurences}</p>
+        <img src={paper} alt="paper" className={cn(['h-6 w-6'])} />
+        <span>Paper: {paperOccurences}</span>
       </li>
 
       <li>
-        <p>Scissors</p>
-        <p>{scissorsOccurences}</p>
+        <img src={scissors} alt="scissors" className={cn(['h-6 w-6'])} />
+        <span>Scissors: {scissorsOccurences}</span>
       </li>
     </ul>
   );
