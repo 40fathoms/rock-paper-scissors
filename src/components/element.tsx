@@ -1,9 +1,9 @@
 import { motion, useMotionValue } from 'framer-motion';
 import { useContext, useRef, useState } from 'react';
 
-import paper from '@/assets/paper.png';
-import rock from '@/assets/rock.png';
-import scissors from '@/assets/scissors.png';
+// import paper from '@/assets/paper.png';
+// import rock from '@/assets/rock.png';
+// import scissors from '@/assets/scissors.png';
 import type { ElementTypes } from '@/classes/QuadTree';
 import { Point } from '@/classes/QuadTree';
 import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
