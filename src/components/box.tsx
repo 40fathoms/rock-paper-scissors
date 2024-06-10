@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { Element } from './element';
+import { Element } from './Element';
 
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { cn } from '@/utils/cn';

@@ -1,8 +1,7 @@
 import { useContext, useState } from 'react';
 
-import paper from '@/assets/paper.png';
-import rock from '@/assets/rock.png';
-import scissors from '@/assets/scissors.png';
+import { ElementIcon } from './ElementIcon';
+
 import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
 import { useRequestAnimationFrame } from '@/hooks/useRequestAnimationFrame';
@@ -33,17 +32,17 @@ const Stats = () => {
       ])}
     >
       <li>
-        <img src={rock} alt="rock" className={cn(['h-6 w-6'])} />
+        <ElementIcon elementType="rock" className={cn(['h-6 w-6'])} />
         <span>Rock: {rockOccurences}</span>
       </li>
 
       <li>
-        <img src={paper} alt="paper" className={cn(['h-6 w-6'])} />
+        <ElementIcon elementType="paper" className={cn(['h-6 w-6'])} />
         <span>Paper: {paperOccurences}</span>
       </li>
 
       <li>
-        <img src={scissors} alt="scissors" className={cn(['h-6 w-6'])} />
+        <ElementIcon elementType="scissors" className={cn(['h-6 w-6'])} />
         <span>Scissors: {scissorsOccurences}</span>
       </li>
     </ul>
