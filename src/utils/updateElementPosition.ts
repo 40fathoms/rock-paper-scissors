@@ -31,7 +31,7 @@ const updateElementPosition: IUpdateElementPosition = ({
 
   const box = boundaryElementRef.current;
   const width = box.offsetWidth;
-  const boundary = width - 20; // Subtracting the width of the element
+  const boundary = width - 26; // Subtracting the width of the element
 
   const newPosition = motionValue.get() + (direction.current[axis] || 0);
 
