@@ -19,7 +19,7 @@ interface ElementProps {
   elementDefaultType: ElementTypes;
 }
 
-const detectionRange = 35; // Define the detection range
+const detectionRange = 37; // Define the detection range
 
 const Element = ({
   id,
