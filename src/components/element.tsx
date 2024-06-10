@@ -1,8 +1,11 @@
 import { motion, useMotionValue } from 'framer-motion';
 import { useContext, useRef, useState } from 'react';
 
-import { Paper, Rock, Scissors } from './icons';
+// import { Paper, Rock, Scissors } from './icons';
 
+import paper from '@/assets/paper.png';
+import rock from '@/assets/rock.png';
+import scissors from '@/assets/scissors.png';
 import type { ElementTypes } from '@/classes/QuadTree';
 import { Point } from '@/classes/QuadTree';
 import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
@@ -19,12 +22,18 @@ interface ElementProps {
   elementDefaultType: ElementTypes;
 }
 
-const detectionRange = 40; // Define the detection range
+const detectionRange = 35; // Define the detection range
+
+// const elementTypeIcon: Record<ElementTypes, JSX.Element> = {
+//   rock: <Rock />,
+//   paper: <Paper />,
+//   scissors: <Scissors />
+// };
 
 const elementTypeIcon: Record<ElementTypes, JSX.Element> = {
-  rock: <Rock />,
-  paper: <Paper />,
-  scissors: <Scissors />
+  rock: <img src={rock} alt="rock" />,
+  paper: <img src={paper} alt="paper" />,
+  scissors: <img src={scissors} alt="scissors" />
 };
 
 const Element = ({
@@ -103,7 +112,10 @@ const Element = ({
     <motion.div
       key={elementType}
       style={{ x, y }}
-      className={cn(['absolute h-4 w-4'])}
+      className={cn([
+        'absolute h-5 w-5',
+        '[&>img]:width-[20px] [&>img]:height-[20px]'
+      ])}
     >
       {elementTypeIcon[elementType]}
     </motion.div>
