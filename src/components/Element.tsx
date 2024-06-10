@@ -12,7 +12,7 @@ import { cn } from '@/utils/cn';
 import { generateRandomCathetuses } from '@/utils/generateRandomCathetuses';
 import { updateElementPosition } from '@/utils/updateElementPosition';
 
-interface ElementProps {
+interface IElement {
   id: string;
   initialX: number;
   initialY: number;
@@ -21,12 +21,7 @@ interface ElementProps {
 
 const detectionRange = 37; // Define the detection range
 
-const Element = ({
-  id,
-  initialX,
-  initialY,
-  elementDefaultType
-}: ElementProps) => {
+const Element = ({ id, initialX, initialY, elementDefaultType }: IElement) => {
   const { boxRef, quadTree, updateQuadTree } = useContext(
     RockPaperScissorsContext
   );
