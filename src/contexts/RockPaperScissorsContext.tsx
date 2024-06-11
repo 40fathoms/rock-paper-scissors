@@ -32,9 +32,9 @@ const RockPaperScissorsContextProvider = ({
   const [initialPoints, _setInitialPoints] = useState<Point[]>(
     new RockPaperScissorPoints(
       {
-        rock: 20,
-        paper: 20,
-        scissors: 20
+        rock: 25,
+        paper: 25,
+        scissors: 25
       },
       {
         screenWidth

@@ -1,5 +1,5 @@
-import { Box } from '@/components/Box';
-import { Stats } from '@/components/Stats';
+import { Box } from '@/components/box';
+import { Stats } from '@/components/stats';
 import { RockPaperScissorsContextProvider } from '@/contexts/RockPaperScissorsContext';
 
 const Home = () => {
