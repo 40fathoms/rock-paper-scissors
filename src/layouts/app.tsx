@@ -11,7 +11,7 @@ const AppLayout = () => {
         'sm:grid-cols-[112px_1fr] sm:grid-rows-1'
       ])}
     >
-      <Menu className={cn(['order-2 bg-gray-800 p-4', 'sm:order-1'])} />
+      <Menu className={cn(['order-2', 'sm:order-1'])} />
       <section className={cn(['order-1', 'sm:order-2'])}>
         <Outlet />
       </section>
