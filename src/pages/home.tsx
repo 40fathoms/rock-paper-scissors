@@ -8,7 +8,8 @@ const Home = () => {
     <RockPaperScissorsContextProvider>
       <div
         className={cn([
-          'flex h-full flex-col items-center gap-4 overflow-auto p-8'
+          'flex h-full flex-col items-center gap-4 overflow-hidden p-8',
+          'sm:overflow-auto'
         ])}
       >
         <Stats />
