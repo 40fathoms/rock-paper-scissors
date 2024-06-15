@@ -1,11 +1,11 @@
-import type { ImgHTMLAttributes } from 'react';
+import type { ComponentProps } from 'react';
 
 import paper from '@/assets/paper.png';
 import rock from '@/assets/rock.png';
 import scissors from '@/assets/scissors.png';
 import type { ElementTypes } from '@/classes/QuadTree';
 
-interface IElementIcon extends ImgHTMLAttributes<HTMLImageElement> {
+interface IElementIcon extends ComponentProps<'img'> {
   elementType: ElementTypes;
 }
 

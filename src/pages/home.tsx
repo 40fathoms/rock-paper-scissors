@@ -5,7 +5,7 @@ import { RockPaperScissorsContextProvider } from '@/contexts/RockPaperScissorsCo
 const Home = () => {
   return (
     <RockPaperScissorsContextProvider>
-      <div className="flex flex-col items-center gap-4">
+      <div className="flex flex-col items-center gap-4 p-8">
         <Stats />
         <Box />
       </div>

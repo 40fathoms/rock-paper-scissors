@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 
-import { ElementIcon } from './element-icon';
+import { ElementIcon } from './ui/element-icon';
 
 import { RockPaperScissorPoints } from '@/classes/RockPaperScissorPoints';
 import { RockPaperScissorsContext } from '@/contexts/RockPaperScissorsContext';
