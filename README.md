@@ -63,7 +63,7 @@ npm:
 npm install -g pnpm
 ```
 
-## Installation
+### Cloning the repo
 
 Clone the repository and install the dependencies:
 
@@ -73,7 +73,7 @@ cd rock-paper-scissors
 pnpm install
 ```
 
-## Running the Application
+### Running the Application
 
 Start the development server:
 
