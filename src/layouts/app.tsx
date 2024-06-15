@@ -8,7 +8,7 @@ const AppLayout = () => {
     <main
       className={cn([
         'grid min-h-dvh grid-cols-1 grid-rows-[1fr_96px] bg-gray-900',
-        'sm:grid-cols-[112px_1fr] sm:grid-rows-1'
+        'sm:h-dvh sm:grid-cols-[112px_1fr] sm:grid-rows-1'
       ])}
     >
       <Menu className={cn(['order-2', 'sm:order-1'])} />
