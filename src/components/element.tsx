@@ -1,7 +1,7 @@
 import { motion, useMotionValue } from 'framer-motion';
 import { useContext, useRef, useState } from 'react';
 
-import { ElementIcon } from './element-icon';
+import { ElementIcon } from './ui/element-icon';
 
 import type { ElementTypes } from '@/classes/QuadTree';
 import { Point } from '@/classes/QuadTree';

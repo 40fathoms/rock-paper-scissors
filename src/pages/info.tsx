@@ -12,7 +12,7 @@ const Info = () => {
   return (
     <div
       className={cn([
-        'h-full bg-gray-800 p-8',
+        'flex h-full flex-col items-center gap-4 bg-gray-800 p-8',
         'transition-transform duration-500 ease-out',
         isVisible
           ? 'translate-x-0 transform opacity-100'
